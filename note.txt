@@ -1,0 +1,10 @@
+note:
+什么是item？
+item是数据分类，比如书、商品。scrapy.Field()是定义类的属性。
+pipelines文件是什么？
+spiders代码如何编写？
+抓取动态网站插件：splash
+
+商品内容层：
+//*[@id="j-goodsAreaWrap"]/div/div[2]/div[2]
+#j-goodsAreaWrap > div > div.m-goodsArea > div.m-content
