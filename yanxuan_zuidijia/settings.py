@@ -52,13 +52,15 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
+# DOWNLOADER_MIDDLEWARES = {
+   # 'yanxuan_zuidijia.middlewares.YanxuanZuidijiaDownloaderMiddleware': 543,
+   # 'scrapy_splash.SplashCookiesMiddleware': 723,
+   # 'scrapy_splash.SplashMiddleware': 725,
+   # 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+# }
 DOWNLOADER_MIDDLEWARES = {
-   'yanxuan_zuidijia.middlewares.YanxuanZuidijiaDownloaderMiddleware': 543,
-   'scrapy_splash.SplashCookiesMiddleware': 723,
-   'scrapy_splash.SplashMiddleware': 725,
-   'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+    'yanxuan_zuidijia.middlewares.SeleniumMiddleware': 543,
 }
-
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -94,4 +96,8 @@ DOWNLOADER_MIDDLEWARES = {
 
 #Ìí¼Óspash url
 # SPLASH_URL = 'http://localhost:8050'
-DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+# DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+
+SELENIUM_TIMEOUT = 20
+
+CHROME_OPTIONS = ['--load-images=false', '--disk-cache=true', '--headless', '--disable-gpu']
