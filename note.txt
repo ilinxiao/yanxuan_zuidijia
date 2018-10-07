@@ -4,6 +4,12 @@ item是数据分类，比如书、商品。scrapy.Field()是定义类的属性�
 pipelines文件是什么？
 spiders代码如何编写？
 抓取动态网站插件：splash
+如何在下载完成后关闭webdriver √
+img url 更新 
+item分离
+计数统计
+重复过滤
+输出json显示中文
 
 商品内容层：
 //*[@id="j-goodsAreaWrap"]/div/div[2]/div[2]
