@@ -14,6 +14,11 @@ BOT_NAME = 'yanxuan_zuidijia'
 SPIDER_MODULES = ['yanxuan_zuidijia.spiders']
 NEWSPIDER_MODULE = 'yanxuan_zuidijia.spiders'
 
+#http cache 
+HTTPCACHE_ENABLED = False
+HTTPCACHE_EXPIRATION_SECS = 3600
+HTTPCACHE_DIR = 'cache'
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'yanxuan_zuidijia (+http://www.yourdomain.com)'
@@ -53,13 +58,13 @@ ROBOTSTXT_OBEY = False
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 # DOWNLOADER_MIDDLEWARES = {
-   # 'yanxuan_zuidijia.middlewares.YanxuanZuidijiaDownloaderMiddleware': 543,
    # 'scrapy_splash.SplashCookiesMiddleware': 723,
    # 'scrapy_splash.SplashMiddleware': 725,
    # 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
 # }
 DOWNLOADER_MIDDLEWARES = {
-    'yanxuan_zuidijia.middlewares.SeleniumMiddleware': 543,
+    # 'yanxuan_zuidijia.middlewares.YanxuanZuidijiaDownloaderMiddleware': 543,
+    'yanxuan_zuidijia.selenium_webdriver_middleware.SeleniumMiddleware': 543,
 }
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -101,3 +106,4 @@ DOWNLOADER_MIDDLEWARES = {
 SELENIUM_TIMEOUT = 20
 
 CHROME_OPTIONS = ['--load-images=false', '--disk-cache=true', '--headless', '--disable-gpu']
+WEBDRIVER_PATH = 'C:\\Users\\lv\\Anaconda3\\Scripts\\chromedriver.exe'

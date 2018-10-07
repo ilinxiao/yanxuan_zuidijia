@@ -2,5 +2,9 @@ import scrapy
 
 class CategoryItem(scrapy.Item):
     category_id = scrapy.Field()
-    category_name = scrapy.Field()
-    category_url = scrapy.Field()
+    parent_id = scrapy.Field()
+    url = scrapy.Field()
+    name = scrapy.Field()
+    desc = scrapy.Field()
+
+# class SubCategoryItem(CategoryItem):
