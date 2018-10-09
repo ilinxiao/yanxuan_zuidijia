@@ -10,7 +10,10 @@ item分离
 计数统计
 重复过滤
 输出json显示中文
+分析json_data数据来源接口
 
 商品内容层：
 //*[@id="j-goodsAreaWrap"]/div/div[2]/div[2]
 #j-goodsAreaWrap > div > div.m-goodsArea > div.m-content
+
+scrapy shell C:\\Users\\lv\\ctest\\yanxuan_zuidijia\\local.html

@@ -51,9 +51,9 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'yanxuan_zuidijia.middlewares.YanxuanZuidijiaSpiderMiddleware': 543,
-#}
+# SPIDER_MIDDLEWARES = {
+   # 'yanxuan_zuidijia.middlewares.YanxuanZuidijiaSpiderMiddleware': 543,
+# }
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
@@ -63,7 +63,7 @@ ROBOTSTXT_OBEY = False
    # 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
 # }
 DOWNLOADER_MIDDLEWARES = {
-    # 'yanxuan_zuidijia.middlewares.YanxuanZuidijiaDownloaderMiddleware': 543,
+    'yanxuan_zuidijia.middlewares.YanxuanZuidijiaDownloaderMiddleware': 542,
     'yanxuan_zuidijia.selenium_webdriver_middleware.SeleniumMiddleware': 543,
 }
 # Enable or disable extensions
@@ -103,7 +103,6 @@ DOWNLOADER_MIDDLEWARES = {
 # SPLASH_URL = 'http://localhost:8050'
 # DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 
-SELENIUM_TIMEOUT = 20
-
-CHROME_OPTIONS = ['--load-images=false', '--disk-cache=true', '--headless', '--disable-gpu']
-WEBDRIVER_PATH = 'C:\\Users\\lv\\Anaconda3\\Scripts\\chromedriver.exe'
+SELENIUM_DRIVER_NAME = 'chrome'
+SELENIUM_DRIVER_EXCUTABLE_PATH = 'C:\\Users\\lv\\Anaconda3\\Scripts\\chromedriver.exe'
+SELENIUM_DRIVER_ARGUMENTS = ['--load-images=false', '--disk-cache=true', '--headless', '--disable-gpu']

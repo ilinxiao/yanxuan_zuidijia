@@ -1,8 +1,11 @@
 import scrapy
-from scrapy import Request
+# from scrapy import Request
 from scrapy.contrib.spiders import CrawlSpider, Rule
 from urllib.parse import urlunparse
+
 from scrapy.contrib.linkextractors import LinkExtractor
+from selenium.webdriver.support import expected_conditions as EC
+
 from yanxuan_zuidijia.category_item import CategoryItem
 from yanxuan_zuidijia.product_item import ProductItem
 
@@ -10,7 +13,9 @@ import yanxuan_zuidijia.tool
 from yanxuan_zuidijia.tool import extract0, get_attribute_from_url, get_simple_url, rebuild_url_query
 import json
 
-class YanxuanSpider(CrawlSpider):
+from yanxuan_zuidijia.selenium_request import SeleniumRequest
+
+class YanxuanSpider(scrapy.Spider):
 
     name = 'yanxuan'
     allowed_domains = ['you.163.com']
@@ -19,9 +24,13 @@ class YanxuanSpider(CrawlSpider):
     ]
     # rules = [Rule(LinkExtractor(allow=['\?categoryId='], deny=['&subCategoryId=']), callback='parse_category')]
     
-    def start_request(self):
-        for url in start_urls:
-            yield Request(url, self.parse)
+    def start_requests(self):
+        for url in self.start_urls:
+            wait_until = EC.visibility_of_element_located(('css selector', '.yx-cp-m-tabNav'))
+            """TypeError: __init__() got multiple values for argument 'wait_until'
+            位置参数和关键字参数混淆
+            """
+            yield SeleniumRequest(url=url, callback=self.parse, wait_time=20, wait_until=wait_until)
     
     def parse(self, response):
         for category  in self.get_category(response):
@@ -36,8 +45,11 @@ class YanxuanSpider(CrawlSpider):
             yield cate_item
 
             url = category[1]
+            
+            wait_until = EC.visibility_of_element_located(('css selector', '.m-goodsArea'))
+            
             #yield category request
-            yield Request(url, callback=self.parse_product)
+            yield SeleniumRequest(url=url, callback=self.parse_product, wait_time=20, wait_until=wait_until)
         
         
     def parse_product(self, response):
@@ -47,10 +59,10 @@ class YanxuanSpider(CrawlSpider):
             parent_category_id = get_attribute_from_url(request_url, 'categoryId')
             sub_category = response.css('.m-content .m-Level2Category')
             for sub_div in sub_category:
-                sub_category_id = extract0(sub_div.xpath('@id'))
+                sub_category_id = sub_div.xpath('@id').extract_first()
                 # sub_category_id = extract0(sub_div.css('id'))
                 self.log('id:%s' % sub_category_id)
-                sub_category_name = extract0(sub_div.css('.hd .title .name::text'))
+                sub_category_name = sub_div.css('.hd .title .name::text').get()
                 self.log('sub category name:%s' % sub_category_name)
                 sub_category_desc = extract0(sub_div.css('.hd .desc::text'))
                 self.log('sub category description:%s' % sub_category_desc)
@@ -106,10 +118,12 @@ class YanxuanSpider(CrawlSpider):
                     price_p = bd_div.xpath('p[@class="price"]/span')
                     product_current_price = extract0(price_p[0].xpath('span[2]//text()'))
                     #original price
-                    ori_price = bd_div.xpath('p[@class="price"]/span[@class="counterPrice"]')
+                    # ori_price = bd_div.xpath('p[@class="price"]/span[@class="counterPrice"]')
+                    ori_price = price_p[1]
                     if ori_price:
-                        product_original_price = extract0(ori_price.xpath('span[2]//text()'))
+                        product_original_price = ori_price.xpath('span[2]//text()').get()
                     self.log('current price:%s\toriginal price:%s' % (product_current_price, product_original_price))
+                    product_original_price = ''
                     #simple desc
                     desc_p = bd_div.css('p.desc')
                     product_simple_desc = extract0(desc_p.css('::text'))
